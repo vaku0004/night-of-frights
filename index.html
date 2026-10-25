@@ -754,7 +754,7 @@ function slides(deck){
     { eyebrow: "The finale", title: "Midnight", art: hero(MOON_SVG),
       bullets: ["One final question. You see only the category first.", "Secretly wager up to half of your score. Low on points? You can always bet up to 500.", "You get 60 seconds. Right: add your wager. Wrong: lose it."] },
     { eyebrow: "House rules", title: "Play fair", art: hero(GHOST_SVG),
-      bullets: ["No phones and no Googling.", "The host has the final word on close answers.", "The top three teams win prizes."] },
+      bullets: ["No phones and no Googling.", "The host has the final word on close answers.", "Only one team survives the night and wins."] },
     { eyebrow: "Let's begin", title: "Ready?", art: hero(PUMPKIN_SVG),
       body: `<p class="slide-big"><b>${esc(first)}</b> picks the first question.</p>`,
       say: LINES.ready }
@@ -1014,7 +1014,7 @@ function standings(){
 }
 function tiedForPrizes(){
   const st = standings();
-  return st.filter(t => t.rank <= 3 && st.some(o => o.i !== t.i && o.rank === t.rank));
+  return st.filter(t => t.rank === 1 && st.some(o => o.i !== t.i && o.rank === t.rank));   // only one team wins, so only a tie for first matters
 }
 function announceWinners(){
   const st = standings(), w = st.filter(t => t.rank === 1);
@@ -1037,7 +1037,7 @@ function viewPodium(){
     <div class="eyebrow">Viktoriia’s Night of Frights · final standings</div>
     <h1 class="big-cat">${headline}</h1>
     ${tied.length ? `<div class="special blackcat">${CAT_SVG}<div><h3>Tie!</h3>
-      <p>${tied.map(t => esc(t.name)).join(", ")} have the same score. Play a tiebreaker to decide the prizes: the closest number wins.</p></div></div>
+      <p>${tied.map(t => esc(t.name)).join(", ")} have the same score. Play a tiebreaker to decide the winner: the closest number wins.</p></div></div>
       <div class="actions" style="margin-top:0"><button class="btn primary" data-act="tbstart">Play the tiebreaker</button></div>` : ""}
     <div class="podium" style="grid-template-columns:repeat(${order.length},minmax(0,1fr))">${order.map(k => slot(top[k])).join("")}</div>
     ${(S.tbOrder || []).length ? `<p class="hint">Equal scores were split by the tiebreaker.</p>` : ""}
