@@ -1451,5 +1451,25 @@ loadPack();
 try { window.claude?.hot?.snapshot?.(() => ({ S, Q })); } catch(e){}
 window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
 </script>
+<nav class="nof-links" aria-label="More about the game">
+<a href="/halloween-trivia-questions/">Halloween trivia questions</a>
+<a href="/virtual-halloween-games-for-work/">Remote &amp; hybrid teams</a>
+<a href="/how-to-host-a-halloween-game-night/">Host guide</a>
+<a href="/faq/">FAQ</a>
+</nav>
+<style>
+.nof-links{display:flex;flex-wrap:wrap;gap:6px 22px;justify-content:center;max-width:1400px;margin:0 auto;padding:8px 16px 36px;
+  font-family:"Alegreya Sans",system-ui,sans-serif;font-weight:700;font-size:.95rem}
+.nof-links a{color:#ab9fbd;text-decoration:none}
+.nof-links a:hover,.nof-links a:focus-visible{color:#ffd58a;text-decoration:underline}
+.nof-links[hidden]{display:none!important}
+</style>
+<script>
+(function(){
+  var nav = document.querySelector('.nof-links'), app = document.getElementById('app');
+  var sync = function(){ nav.hidden = !(app.querySelector('.setup') || app.querySelector('.nof-static')); };
+  new MutationObserver(sync).observe(app, { childList: true }); sync();
+})();
+</script>
 </body>
 </html>
