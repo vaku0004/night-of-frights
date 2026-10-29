@@ -3,6 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JL1KBEZPQX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'denied', region:['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH', 'CA-QC']});
+gtag('consent', 'default', {ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'granted'});
+gtag('js', new Date());
+gtag('config', 'G-JL1KBEZPQX', {allow_google_signals:false, allow_ad_personalization_signals:false});
+</script>
 <title>Virtual &amp; Hybrid Halloween Games for Work (Free, No Sign-Up)</title>
 <meta name="description" content="Halloween games for teams where part of the group joins by video: a free trivia game with a narrator, setup steps for Teams, Zoom and Meet, and more ideas.">
 <link rel="canonical" href="https://nightoffrights.monster/virtual-halloween-games-for-work/">
@@ -119,13 +128,29 @@ See you there!<button class="btn" type="button" data-copy="invite">Copy</button>
 </main>
 <footer class="site-foot"><div class="wrap">
   <nav aria-label="Footer"><a href="/">Play the game</a><a href="/halloween-trivia-questions/">Trivia questions</a><a href="/virtual-halloween-games-for-work/">Remote & hybrid teams</a><a href="/how-to-host-a-halloween-game-night/">Host guide</a><a href="/faq/">FAQ</a></nav>
-  <span>Victoria’s Night of Frights · a free Halloween quiz game for teams · Updated October 2026</span>
+  <span>Victoria’s Night of Frights · a free Halloween quiz game for teams · <a href="/faq/#privacy">Privacy</a> · Updated October 2026</span>
 </div></footer>
 <script>
 document.querySelectorAll('[data-copy]').forEach(function(b){ b.addEventListener('click', function(){
   var box = document.getElementById(b.getAttribute('data-copy')); var text = box.firstChild.textContent;
   var done = function(){ b.textContent = 'Copied'; setTimeout(function(){ b.textContent = 'Copy'; }, 1800); };
   if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function(){}); }); });
+</script>
+<script>
+(function(){
+  if (typeof gtag !== 'function') return;
+  var page = location.pathname.replace(/\//g, '') || 'home';
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href="/"]');
+    if (a) gtag('event', 'play_click', { from_page: page, link_text: (a.textContent || '').trim().slice(0, 40) });
+    var p = e.target.closest && e.target.closest('[data-print]');
+    if (p) gtag('event', 'print_questions', { with_answers: p.getAttribute('data-print') === 'answers' ? 'yes' : 'no' });
+    if (e.target.closest && e.target.closest('[data-toggle-all]')) gtag('event', 'show_all_answers');
+    if (e.target.closest && e.target.closest('[data-copy]')) gtag('event', 'copy_invite');
+    var s = e.target.closest && e.target.closest('summary');
+    if (s && s.parentElement && !s.parentElement.open) gtag('event', 'show_answer', { question: (s.closest('li') || {}).id || '' });
+  }, true);
+})();
 </script>
 </body>
 </html>

@@ -3,6 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JL1KBEZPQX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'denied', region:['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB', 'CH', 'CA-QC']});
+gtag('consent', 'default', {ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'granted'});
+gtag('js', new Date());
+gtag('config', 'G-JL1KBEZPQX', {allow_google_signals:false, allow_ad_personalization_signals:false});
+</script>
 <meta name="description" content="Free Halloween trivia game for office parties and team events: a spooky game-show board, a black cat, a witch’s deal and a midnight wager.">
 <link rel="canonical" href="https://nightoffrights.monster/">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -1469,6 +1478,44 @@ window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude
   var nav = document.querySelector('.nof-links'), app = document.getElementById('app');
   var sync = function(){ nav.hidden = !(app.querySelector('.setup') || app.querySelector('.nof-static')); };
   new MutationObserver(sync).observe(app, { childList: true }); sync();
+})();
+</script>
+<script>
+(function(){
+  if (typeof gtag !== 'function') return;
+  var app = document.getElementById('app'), last = '', fired = {};
+  var store = { get: function(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } },
+                set: function(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} } };
+  try { fired = JSON.parse(store.get('nof-ga') || '{}'); } catch(e){ fired = {}; }
+  var once = function(name, params){ if (fired[name]) return; fired[name] = 1; store.set('nof-ga', JSON.stringify(fired)); gtag('event', name, params || {}); };
+  var check = function(){
+    var s; try { s = S; } catch(e){ return; }
+    if (!s) return;
+    var key = s.screen + '|' + s.round + '|' + (s.deck || '') + '|' + (s.q ? s.q.c + '-' + s.q.i + '-' + s.round : '');
+    if (key === last) return;
+    var prev = last; last = key;
+    var teams = s.teamCount;
+    if (s.screen === 'rules' && s.deck === 'intro' && prev.indexOf('setup') === 0){
+      fired = {}; store.set('nof-ga', '{}');
+      once('game_start', { team_count: teams });
+    }
+    if (s.screen === 'board' && s.round === 1) once('round_two', { team_count: teams });
+    if (s.screen === 'final') once('midnight', { team_count: teams });
+    if (s.screen === 'tiebreak') once('tiebreaker', { team_count: teams });
+    if (s.screen === 'podium') once('game_complete', { team_count: teams });
+    if (s.screen === 'board' && s.q && prev.split('|')[3] !== key.split('|')[3]){
+      gtag('event', 'question_open', { round: s.round + 1, value: s.q.value, special: s.q.special || 'none' });
+    }
+  };
+  new MutationObserver(check).observe(app, { childList: true });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-act]'); if (!b) return;
+    var act = b.getAttribute('data-act');
+    if (act === 'edit') gtag('event', 'open_question_editor');
+    if (act === 'voice') gtag('event', 'open_voice_settings');
+    if (act === 'edone') gtag('event', 'questions_edited');
+  }, true);
+  check();
 })();
 </script>
 </body>
