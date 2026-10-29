@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /voice-kit/
+
+Sitemap: https://nightoffrights.monster/sitemap.xml

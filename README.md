@@ -2,7 +2,7 @@
 
 A Halloween quiz game for office parties, made to be shown on a big screen while one host runs it from a laptop. Teams play in the room and over a video call.
 
-**Play it:** https://vaku0004.github.io/night-of-frights/
+**Play it:** https://nightoffrights.monster/
 
 ## What's in the game
 
